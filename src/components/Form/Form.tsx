@@ -33,6 +33,22 @@ function Form({ displayNone, handlePrev }: FormProps) {
     isValidForm();
   };
 
+  const displayValidOrInvalid = () => {
+    const minChar = /^(.{8,})$/.test(formData.password);
+    const maxChar = /^(.{0,16})$/.test(formData.password);
+    const letterAndNumber = /^(?=.*[0-9])(?=.*[a-z])/.test(formData.password);
+    const specialChar = /^(?=.*[|/´!@#$%^&*])[A-Za-z\d|/´!@#$%^&*]+$/.test(formData.password);
+    return {
+      minChar,
+      maxChar,
+      letterAndNumber,
+      specialChar,
+    };
+  };
+
+  const valid = displayValidOrInvalid();
+  const isValid = 'valid-password-check';
+  const isNotValid = 'invalid-password-check';
   return (
     <form
       onSubmit={ handlePrev }
@@ -68,6 +84,39 @@ function Form({ displayNone, handlePrev }: FormProps) {
           name="password"
           id="password"
         />
+      </div>
+
+      <div>
+        <p
+          className={ `${valid.minChar
+            ? isValid
+            : isNotValid}` }
+        >
+          Possuir 8 ou mais caracteres
+        </p>
+        <p
+          className={ `${valid.maxChar
+            ? isValid
+            : isNotValid}` }
+        >
+          Possuir até 16 caracteres
+
+        </p>
+        <p
+          className={ `${valid.letterAndNumber
+            ? isValid
+            : isNotValid}` }
+        >
+          Possuir letras e números
+
+        </p>
+        <p
+          className={ `${valid.specialChar
+            ? isValid
+            : isNotValid}` }
+        >
+          Possuir algum caractere especial
+        </p>
       </div>
 
       <div>
