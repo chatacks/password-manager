@@ -6,16 +6,21 @@ type FormProps = {
 };
 
 function Form({ displayNone, handlePrev }: FormProps) {
-  const [validPassword, setValidPassword] = useState(false);
+  const [check, setCheck] = useState(false);
   const [formData, setFormData] = useState(
     { service: '', login: '', password: '', url: '' },
   );
 
-  // validação senha
-  const isValidPassword = () => {
-    const regexPassword = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/
+  const isValidForm = () => {
+    const name = formData.login.length > 0;
+    const password = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,16}$/
       .test(formData.password);
-    setValidPassword(regexPassword);
+    const service = formData.service.length > 0;
+    const url = formData.url.length > 0;
+
+    if (name && password && service && url) {
+      setCheck(true);
+    }
   };
 
   const handleFormChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +30,7 @@ function Form({ displayNone, handlePrev }: FormProps) {
       [name]: value,
     }));
 
-    isValidPassword();
+    isValidForm();
   };
 
   return (
@@ -63,9 +68,6 @@ function Form({ displayNone, handlePrev }: FormProps) {
           name="password"
           id="password"
         />
-        {validPassword
-          ? <p style={ { color: 'green' } }> senha válida</p>
-          : <p style={ { color: 'red' } }> senha inválida</p> }
       </div>
 
       <div>
@@ -78,8 +80,9 @@ function Form({ displayNone, handlePrev }: FormProps) {
           id="url"
         />
       </div>
-
-      <button>Cadastrar</button>
+      {check
+        ? (<button>Cadastrar</button>)
+        : (<button disabled>Cadastrar</button>) }
       <button onClick={ displayNone }>Cancelar</button>
     </form>
   );
