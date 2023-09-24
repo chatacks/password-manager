@@ -10,6 +10,7 @@ function Patern() {
     event.preventDefault();
   };
 
+  // função para controlar (display: 'none') do Form
   const handleDisplayClick = () => {
     setDisplay(!display);
   };
