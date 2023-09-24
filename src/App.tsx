@@ -1,12 +1,12 @@
 import './App.css';
 import Header from './components/Header';
-import Form from './components/Form/Form';
+import Patern from './components/Form';
 
 function App() {
   return (
     <div>
       <Header />
-      <Form />
+      <Patern />
     </div>
   );
 }

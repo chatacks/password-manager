@@ -1,6 +1,13 @@
-function Form() {
+type FormProps = {
+  displayNone: () => void
+  handlePrev: (event: React.FormEvent<HTMLFormElement>) => void
+};
+
+function Form({ displayNone, handlePrev }: FormProps) {
   return (
-    <form action="">
+    <form
+      onSubmit={ handlePrev }
+    >
       <div>
         <label htmlFor="service">Nome do serviço</label>
         <input type="text" name="" id="service" />
@@ -22,7 +29,7 @@ function Form() {
       </div>
 
       <button>Cadastrar</button>
-      <button>Cancelar</button>
+      <button onClick={ displayNone }>Cancelar</button>
     </form>
   );
 }
