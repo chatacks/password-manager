@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { RegistryType } from '../../type';
 
 type FormProps = {
-  displayNone: () => void
-  handlePrev: (event: React.FormEvent<HTMLFormElement>) => void
+  displayNone: () => void;
+  setReceive: (newRegistry: RegistryType) => void;
 };
 
-function Form({ displayNone, handlePrev }: FormProps) {
+function Form({ displayNone, setReceive }: FormProps) {
   const [check, setCheck] = useState(false);
   const [formData, setFormData] = useState(
     { service: '', login: '', password: '', url: '' },
@@ -49,9 +50,32 @@ function Form({ displayNone, handlePrev }: FormProps) {
   const valid = displayValidOrInvalid();
   const isValid = 'valid-password-check';
   const isNotValid = 'invalid-password-check';
+
+  const handleRegistryClick = () => {
+    const newRegistry = {
+      service: formData.service,
+      login: formData.login,
+      password: formData.password,
+      url: formData.url,
+    };
+    setReceive(newRegistry);
+  };
+
+  // função de prevent Default
+  const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    displayNone();
+    setFormData({
+      service: '',
+      login: '',
+      password: '',
+      url: '',
+    });
+  };
+
   return (
     <form
-      onSubmit={ handlePrev }
+      onSubmit={ handleSubmitForm }
     >
       <div>
         <label htmlFor="service">Nome do serviço</label>
@@ -127,10 +151,11 @@ function Form({ displayNone, handlePrev }: FormProps) {
           type="text"
           name="url"
           id="url"
+          autoComplete="off"
         />
       </div>
       {check
-        ? (<button>Cadastrar</button>)
+        ? (<button onClick={ handleRegistryClick }>Cadastrar</button>)
         : (<button disabled>Cadastrar</button>) }
       <button onClick={ displayNone }>Cancelar</button>
     </form>
