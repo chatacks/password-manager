@@ -33,6 +33,7 @@ function Patern() {
         displayNone={ handleDisplayClick }
         setReceive={ setReceive }
       />}
+
       {display
         ? null
         : <button onClick={ handleDisplayClick }> Cadastrar nova senha</button> }
